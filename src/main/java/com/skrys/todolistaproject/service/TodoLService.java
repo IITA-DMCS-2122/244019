@@ -51,8 +51,9 @@ public class TodoLService {
         return id + " id -> course removed/completed";
     }
 
+
     public List<TodoL> getTodoLs() {
-        return todoLRepository.getAll();
+        return todoLRepository.findAll();
     }
 
 

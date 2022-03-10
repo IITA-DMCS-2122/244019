@@ -32,7 +32,7 @@ public class TodoLController {
     public TodoL findTodoLById(@PathVariable int id) {
         return todoLService.getTodoLById(id);
     }
-    @GetMapping("/todoLByName/{name}")
+    @GetMapping("/todoLByName/{topic}")
     public TodoL findTodoLByTopic(@PathVariable String topic) {
         return todoLService.getTodoLByTopic(topic);
     }

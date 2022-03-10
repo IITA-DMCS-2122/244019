@@ -14,5 +14,5 @@ public interface TodoLRepository extends JpaRepository<TodoL, Integer> {
 
     List<TodoL> findAllByUsername(String username);
 
-    List<TodoL> getAll();
+    List<TodoL> findAll();
 }
