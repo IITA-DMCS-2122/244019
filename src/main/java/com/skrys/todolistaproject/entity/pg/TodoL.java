@@ -1,17 +1,11 @@
-package com.skrys.todolistaproject.entity;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+package com.skrys.todolistaproject.entity.pg;
 
 import javax.persistence.*;
 
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "user")
+@Table(name = "todol")
 public class TodoL {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

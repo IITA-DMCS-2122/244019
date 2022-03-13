@@ -1,7 +1,9 @@
 package com.skrys.todolistaproject.service;
 
 
-import com.skrys.todolistaproject.entity.TodoL;
+import com.skrys.todolistaproject.entity.mgdb.TodoLMGDB;
+import com.skrys.todolistaproject.entity.pg.TodoL;
+import com.skrys.todolistaproject.repositories.TodoLMongoRepository;
 import com.skrys.todolistaproject.repositories.TodoLRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,24 @@ import java.util.List;
 public class TodoLService {
     @Autowired
     private TodoLRepository todoLRepository;
+    @Autowired
+    private TodoLMongoRepository todoLMongoRepository;
+
+
+    public TodoLService(TodoLRepository todoLRepository, TodoLMongoRepository todoLMongoRepository) {
+        this.todoLRepository = todoLRepository;
+        this.todoLMongoRepository = todoLMongoRepository;
+    }
+
+    public TodoLMGDB pgTodoLtoMongoTodoLMGDB(TodoL todo){
+        return new TodoLMGDB(todo.getId(), todo.getPriority(), todo.getTopic(), todo.getStatus(), todo.getDescription(), todo.getUsername());
+    }
 
     //POST
     public TodoL saveTodoL(TodoL todo) {
-        return todoLRepository.save(todo);
+        TodoL tmpTodoL = todoLRepository.save(todo);
+        todoLMongoRepository.save(pgTodoLtoMongoTodoLMGDB(tmpTodoL));
+        return tmpTodoL;
     }
     //GET
     public List<TodoL> getTODOs() {
@@ -48,6 +64,7 @@ public class TodoLService {
     //DELETE
     public String deleteTodoL(int id) {
         todoLRepository.deleteById(id);
+        todoLMongoRepository.deleteById(id);
         return id + " id -> course removed/completed";
     }
 

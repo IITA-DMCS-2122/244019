@@ -1,7 +1,8 @@
 package com.skrys.todolistaproject.repositories;
 
 
-import com.skrys.todolistaproject.entity.TodoL;
+import com.skrys.todolistaproject.entity.mgdb.TodoLMGDB;
+import com.skrys.todolistaproject.entity.pg.TodoL;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
