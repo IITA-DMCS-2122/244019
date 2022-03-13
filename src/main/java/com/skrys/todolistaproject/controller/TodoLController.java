@@ -1,6 +1,7 @@
 package com.skrys.todolistaproject.controller;
 
 import com.skrys.todolistaproject.entity.TodoL;
+import com.skrys.todolistaproject.repositories.TodoLRepository;
 import com.skrys.todolistaproject.service.TodoLService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = { "http://localhost:2137"})
+@CrossOrigin(origins = { "http://localhost:3030"})
 public class TodoLController {
 
     @Autowired
     private TodoLService todoLService;
+
+
     private final Logger logger = LoggerFactory.getLogger(TodoLController.class);
     //POST
     @PostMapping("/addTODO")

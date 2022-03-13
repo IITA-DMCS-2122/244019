@@ -14,6 +14,10 @@ public class TodoLService {
     @Autowired
     private TodoLRepository todoLRepository;
 
+    public TodoLService(TodoLRepository todoLRepository) {
+        this.todoLRepository = todoLRepository;
+    }
+
     //POST
     public TodoL saveTodoL(TodoL todo) {
         return todoLRepository.save(todo);

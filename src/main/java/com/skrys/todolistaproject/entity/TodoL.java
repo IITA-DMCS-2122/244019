@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "user")
+@Table(name = "todol")
 public class TodoL {
 
     @Id
