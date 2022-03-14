@@ -9,9 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TodoLRepository extends JpaRepository<TodoL, Integer> {
+public interface TodoLRepository extends JpaRepository<TodoL, Long> {
 
     TodoL findByTopic(String topic);
+    TodoL findByBusinessKey(String bId);
+    void deleteByBusinessKey(String bId);
 
     List<TodoL> findAllByUsername(String username);
 

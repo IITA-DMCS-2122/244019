@@ -1,5 +1,6 @@
 package com.skrys.todolistaproject.controller;
 
+import com.skrys.todolistaproject.entity.elastic.TodoLElastic;
 import com.skrys.todolistaproject.entity.pg.TodoL;
 import com.skrys.todolistaproject.service.TodoLService;
 import org.slf4j.Logger;
@@ -32,6 +33,10 @@ public class TodoLController {
     public List<TodoL> getAllTodoL() {
         return todoLService.getTodoLs();
     }
+    @GetMapping("/elTODOs")
+    public List<TodoLElastic> getAllElTodoL() {
+        return todoLService.getElTodoLs();
+    }
     @GetMapping("/todoById/{id}")
     public TodoL findTodoLById(@PathVariable int id) {
         return todoLService.getTodoLById(id);
@@ -50,14 +55,21 @@ public class TodoLController {
     public TodoL updateTodoL(@RequestBody TodoL todoL)
     {
         System.out.println("UPDATED");
-        return todoLService.updateTodoL(todoL);
+        return todoLService.updateTodoLById(todoL);
+    }
+
+    @PutMapping("/updatebId")
+    public TodoL updateTodoLBybId(@RequestBody TodoL todoL)
+    {
+        System.out.println("UPDATED");
+        return todoLService.updateTodoLBybId(todoL);
     }
 
 
     //DELETE
-    @DeleteMapping("/delete/{id}")
-    public String deleteTodoL(@PathVariable int id) {
-        return todoLService.deleteTodoL(id);
+    @DeleteMapping("/delete/{bId}")
+    public String deleteTodoL(@PathVariable String bId) {
+        return todoLService.deleteTodoL(bId);
     }
 
 }

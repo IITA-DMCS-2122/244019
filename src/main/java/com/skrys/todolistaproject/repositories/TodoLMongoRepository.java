@@ -9,11 +9,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TodoLMongoRepository extends MongoRepository<TodoLMGDB, Integer> {
+public interface TodoLMongoRepository extends MongoRepository<TodoLMGDB, Long> {
 
     TodoLMGDB findByTopic(String topic);
 
     List<TodoLMGDB> findAllByUsername(String username);
+    void deleteByBusinessKey(String bId);
 
     List<TodoLMGDB> findAll();
 

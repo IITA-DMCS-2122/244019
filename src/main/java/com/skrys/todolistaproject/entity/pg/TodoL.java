@@ -9,7 +9,7 @@ public class TodoL {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     private int priority;
 
@@ -18,12 +18,15 @@ public class TodoL {
     private String status;
     private String description;
     private String username;
+    @Column(unique = true)
+    private String businessKey;
 
-    public int getId() {
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -65,5 +68,13 @@ public class TodoL {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getBusinessKey() {
+        return businessKey;
+    }
+
+    public void setBusinessKey(String businessKey) {
+        this.businessKey = businessKey;
     }
 }

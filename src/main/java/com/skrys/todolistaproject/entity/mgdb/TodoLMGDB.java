@@ -12,18 +12,19 @@ import javax.persistence.*;
 @Document("todo")
 public class TodoLMGDB {
 
-    public TodoLMGDB(int id, int priority, String topic, String status, String description, String username) {
+    public TodoLMGDB(long id, int priority, String topic, String status, String description, String username, String businessKey) {
         this.id = id;
         this.priority = priority;
         this.topic = topic;
         this.status = status;
         this.description = description;
         this.username = username;
+        this.businessKey = businessKey;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     private int priority;
 
@@ -32,12 +33,15 @@ public class TodoLMGDB {
     private String status;
     private String description;
     private String username;
+    @Column(unique = true)
+    private String businessKey;
 
-    public int getId() {
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -79,5 +83,13 @@ public class TodoLMGDB {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getBusinessKey() {
+        return businessKey;
+    }
+
+    public void setBusinessKey(String businessKey) {
+        this.businessKey = businessKey;
     }
 }
