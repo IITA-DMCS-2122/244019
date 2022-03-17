@@ -6,8 +6,9 @@ import com.skrys.todolistaproject.entity.mgdb.TodoLMGDB;
 import com.skrys.todolistaproject.entity.pg.TodoL;
 import com.skrys.todolistaproject.repositories.TodoLElasticRepository;
 import com.skrys.todolistaproject.repositories.TodoLMongoRepository;
-import com.skrys.todolistaproject.repositories.TodoLRepository;
+import com.skrys.todolistaproject.repositories.pg1.TodoLPg1Repository;
 
+import com.skrys.todolistaproject.repositories.pg2.TodoLPg2Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,15 +19,17 @@ import java.util.UUID;
 @Service
 public class TodoLService {
     @Autowired
-    private TodoLRepository todoLRepository;
+    private TodoLPg1Repository todoLRepository;
+    @Autowired
+    private TodoLPg2Repository todoLPg2Repository;
     @Autowired
     private TodoLMongoRepository todoLMongoRepository;
     @Autowired
     private TodoLElasticRepository todoLElasticRepository;
 
-
-    public TodoLService(TodoLRepository todoLRepository, TodoLMongoRepository todoLMongoRepository, TodoLElasticRepository todoLElasticRepository) {
+    public TodoLService(TodoLPg1Repository todoLRepository, TodoLPg2Repository todoLPg2Repository, TodoLMongoRepository todoLMongoRepository, TodoLElasticRepository todoLElasticRepository) {
         this.todoLRepository = todoLRepository;
+        this.todoLPg2Repository = todoLPg2Repository;
         this.todoLMongoRepository = todoLMongoRepository;
         this.todoLElasticRepository = todoLElasticRepository;
     }
@@ -49,6 +52,9 @@ public class TodoLService {
     public TodoL saveTodoL(TodoL todo) {
         todo.setBusinessKey(hashID(todo.getId()));
         TodoL tmpTodoL = todoLRepository.save(todo);
+        System.out.println(tmpTodoL.getId());
+        //todoLPg2Repository.save(tmpTodoL);//zapisywanie do analitics
+        System.out.println(todoLPg2Repository.save(tmpTodoL).getId());
         todoLMongoRepository.save(pgTodoLtoMongoTodoLMGDB(tmpTodoL));
         todoLElasticRepository.save(pgTodoLtoElasticTodoLElastic(todo));
         return tmpTodoL;
