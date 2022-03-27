@@ -1,7 +1,6 @@
-package com.skrys.todolistaproject.repositories;
+package com.skrys.todolistaproject.repositories.pg1;
 
 
-import com.skrys.todolistaproject.entity.mgdb.TodoLMGDB;
 import com.skrys.todolistaproject.entity.pg.TodoL;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TodoLRepository extends JpaRepository<TodoL, Long> {
+public interface TodoLPg1Repository extends JpaRepository<TodoL, Long> {
 
     TodoL findByTopic(String topic);
     TodoL findByBusinessKey(String bId);
