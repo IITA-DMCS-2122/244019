@@ -52,9 +52,9 @@ public class TodoLService {
     public TodoL saveTodoL(TodoL todo) {
         todo.setBusinessKey(hashID(todo.getId()));
         TodoL tmpTodoL = todoLRepository.save(todo);
-        System.out.println(tmpTodoL.getId());
-        //todoLPg2Repository.save(tmpTodoL);//zapisywanie do analitics
-        System.out.println(todoLPg2Repository.save(tmpTodoL).getId());
+        //System.out.println(tmpTodoL.getId());
+        todoLPg2Repository.save(tmpTodoL);//zapisywanie do analitics
+        //System.out.println(todoLPg2Repository.save(tmpTodoL).getId());
         todoLMongoRepository.save(pgTodoLtoMongoTodoLMGDB(tmpTodoL));
         todoLElasticRepository.save(pgTodoLtoElasticTodoLElastic(todo));
         return tmpTodoL;
