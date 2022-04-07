@@ -17,4 +17,5 @@ public interface TodoLPg1Repository extends JpaRepository<TodoL, Long> {
     List<TodoL> findAllByUsername(String username);
 
     List<TodoL> findAll();
+    TodoL findTopByOrderByIdDesc();
 }

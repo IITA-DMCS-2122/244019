@@ -15,12 +15,14 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableElasticsearchRepositories(basePackages = "com.skrys.todolistaproject.repositories")
-@ComponentScan(basePackages = { "com.skrys.todolistaproject.service" })
+@ComponentScan(basePackages = { "com.skrys.todolistaproject.service",  "com.skrys.todolistaproject.controller"})
+@EnableScheduling //TODO czasowe wywolania
 public class Config {
 
 

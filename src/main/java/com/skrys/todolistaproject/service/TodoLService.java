@@ -2,10 +2,10 @@ package com.skrys.todolistaproject.service;
 
 
 import com.skrys.todolistaproject.entity.elastic.TodoLElastic;
-import com.skrys.todolistaproject.entity.mgdb.TodoLMGDB;
+import com.skrys.todolistaproject.entity.mgdb.Event;
 import com.skrys.todolistaproject.entity.pg.TodoL;
+import com.skrys.todolistaproject.repositories.EventMongoRepository;
 import com.skrys.todolistaproject.repositories.TodoLElasticRepository;
-import com.skrys.todolistaproject.repositories.TodoLMongoRepository;
 import com.skrys.todolistaproject.repositories.pg1.TodoLPg1Repository;
 
 import com.skrys.todolistaproject.repositories.pg2.TodoLPg2Repository;
@@ -23,20 +23,17 @@ public class TodoLService {
     @Autowired
     private TodoLPg2Repository todoLPg2Repository;
     @Autowired
-    private TodoLMongoRepository todoLMongoRepository;
+    private EventMongoRepository eventMongoRepository;
     @Autowired
     private TodoLElasticRepository todoLElasticRepository;
 
-    public TodoLService(TodoLPg1Repository todoLRepository, TodoLPg2Repository todoLPg2Repository, TodoLMongoRepository todoLMongoRepository, TodoLElasticRepository todoLElasticRepository) {
+    public TodoLService(TodoLPg1Repository todoLRepository, TodoLPg2Repository todoLPg2Repository, EventMongoRepository eventMongoRepository, TodoLElasticRepository todoLElasticRepository) {
         this.todoLRepository = todoLRepository;
         this.todoLPg2Repository = todoLPg2Repository;
-        this.todoLMongoRepository = todoLMongoRepository;
+        this.eventMongoRepository = eventMongoRepository;
         this.todoLElasticRepository = todoLElasticRepository;
     }
 
-    public TodoLMGDB pgTodoLtoMongoTodoLMGDB(TodoL todo){
-        return new TodoLMGDB(todo.getId(), todo.getPriority(), todo.getTopic(), todo.getStatus(), todo.getDescription(), todo.getUsername(), todo.getBusinessKey());
-    }
 
     public TodoLElastic pgTodoLtoElasticTodoLElastic(TodoL todo){
         return new TodoLElastic(todo.getId(), todo.getPriority(), todo.getTopic(), todo.getStatus(), todo.getDescription(), todo.getUsername(), todo.getBusinessKey());
@@ -48,14 +45,20 @@ public class TodoLService {
 
     }
 
+
+
+    public Event saveEvent(Event event){
+        return eventMongoRepository.save(event);
+    }
+
     //POST
     public TodoL saveTodoL(TodoL todo) {
-        todo.setBusinessKey(hashID(todo.getId()));
+        //todo.setBusinessKey(hashID(todo.getId()));
         TodoL tmpTodoL = todoLRepository.save(todo);
         //System.out.println(tmpTodoL.getId());
         todoLPg2Repository.save(tmpTodoL);//zapisywanie do analitics
         //System.out.println(todoLPg2Repository.save(tmpTodoL).getId());
-        todoLMongoRepository.save(pgTodoLtoMongoTodoLMGDB(tmpTodoL));
+        //todo MONGO stare TodoL todoLMongoRepository.save(pgTodoLtoMongoTodoLMGDB(tmpTodoL));
         todoLElasticRepository.save(pgTodoLtoElasticTodoLElastic(todo));
         return tmpTodoL;
     }
@@ -85,7 +88,7 @@ public class TodoLService {
         existing_todo.setUsername(todoL.getUsername());
         //existing_todo.setBusinessKey(todoL.getBusinessKey());
         TodoL tTodoL = todoLRepository.save(existing_todo);
-        todoLMongoRepository.save(pgTodoLtoMongoTodoLMGDB(tTodoL));
+        //todo MONGO stare TodoL todoLMongoRepository.save(pgTodoLtoMongoTodoLMGDB(tTodoL));
         todoLElasticRepository.save(pgTodoLtoElasticTodoLElastic(tTodoL));
         return tTodoL;
     }
@@ -99,7 +102,7 @@ public class TodoLService {
         existing_todo.setUsername(todoL.getUsername());
         //existing_todo.setBusinessKey(todoL.getBusinessKey());
         TodoL tTodoL = todoLRepository.save(existing_todo);
-        todoLMongoRepository.save(pgTodoLtoMongoTodoLMGDB(tTodoL));
+        //todo MONGO stare TodoL todoLMongoRepository.save(pgTodoLtoMongoTodoLMGDB(tTodoL));
         todoLElasticRepository.save(pgTodoLtoElasticTodoLElastic(tTodoL));
         return tTodoL;
     }
@@ -108,7 +111,7 @@ public class TodoLService {
     @Transactional
     public String deleteTodoL(String bId) {
         todoLRepository.deleteByBusinessKey(bId);
-        todoLMongoRepository.deleteByBusinessKey(bId);
+        //todo MONGO stare TodoL todoLMongoRepository.deleteByBusinessKey(bId);
         todoLElasticRepository.deleteByBusinessKey(bId);
         //todoLRepository.deleteById(id);
         //todoLMongoRepository.deleteById(id);
