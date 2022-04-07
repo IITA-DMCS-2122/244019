@@ -14,7 +14,6 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = { "http://localhost:3030"})
 public class TodoLController {
 
     @Autowired
